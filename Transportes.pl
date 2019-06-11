@@ -55,6 +55,17 @@ partes_instancia(helicoptero,asientos).
 partes_instancia(helicoptero,volante).
 partes_instancia(globo_aereostatico,puertas).
 
+otra_instancia(hatchback,carro).
+otra_instancia(sedan,carro).
+otra_instancia(suv,carro).
+otra_instancia(metro,tren).
+otra_instancia(tren_electrico,tren).
+otra_instancia(cuatrimoto,moto).
+otra_instancia(avion_carga, avion).
+otra_instancia(yate,barco).
+
+
+
 %Transportes
 transportes(A,B):-subclase_de(B,A).
 
@@ -70,3 +81,20 @@ partes_transporte(A,B):-partes_instancia(A,B).
 %Saber que transporte es
 es_un(TRANSPORTE,TIPO,INSTANCIA):-instancia_de(TIPO,INSTANCIA), subclase_de(TRANSPORTE,TIPO).
 
+%Saber todos los objetos padres de objeto hijo
+es_un(TRANSPORTE,TIPO,INSTANCIA,OTRA):-otra_instancia(OTRA,INSTANCIA), instancia_de(TIPO,INSTANCIA), subclase_de(TRANSPORTE,TIPO).
+
+%Desde el objeto de menor jerarquia hasta el el objeto de mayor jerarquia
+
+es(D,E,0):-otra_instancia(E,D).
+es(D,E,PR):-otra_instancia(E,D1),
+    sub(D,D1,PR).
+
+sub(C1,C2,0):-instancia_de(C1,C2).
+sub(C1,C2,PR):-instancia_de(C3,C2),
+    sub2(C3,C1,PR).
+
+sub2(C1,C2,1):-subclase_de(C2,C1).
+sub2(C1,C2,N):-subclase_de(C3,C1),
+    sub2(C3,C2,M),
+    N is M+1.
