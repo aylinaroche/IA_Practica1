@@ -119,3 +119,5 @@ sub2(C1,C2,N):-subclase_de(C3,C1),
     sub2(C3,C2,M),
     N is M+1.
 >>>>>>> 0a2cfa45748bafa6663f33d6243d58b2ad6836c5
+
+%prueba
